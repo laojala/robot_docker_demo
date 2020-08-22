@@ -17,7 +17,6 @@ jobs:
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
               -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator" \
               -e ROBOT_OPTIONS="--variable NOT_DINOSAUR:kissa" \
-              --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         - name: Upload reports
           uses: actions/upload-artifact@v1
