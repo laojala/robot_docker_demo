@@ -1,0 +1,30 @@
+# Manually triggered workflow
+name: Run Robot Framework Tests
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron:  '0 0 1 1 *'  #once a year in January 1st
+
+jobs:
+    run_tests:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Run Robot Framework Tests
+          run: |
+            docker run \
+              -v ${PWD}/reports:/opt/robotframework/reports:Z \
+              -v ${PWD}/tasks:/opt/robotframework/tests:Z \
+              -v ${PWD}/reports/file://opt/robotframework/temp/reports/file/ \
+              -e ROBOT_OPTIONS="-v DINOSAUR:Achillobator -v NOT_DINOSAUR:dog " \
+              --user $(id -u):$(id -g) \
+              ppodgorsek/robot-framework:latest
+        - name: Upload reports
+          uses: actions/upload-artifact@v1
+          if: always()
+          with:
+            name: reports
+            path: ${{ github.workspace }}/reports
