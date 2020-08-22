@@ -12,7 +12,7 @@ jobs:
         - uses: actions/checkout@v2
         - name: Run Robot Framework Tests
           run: |
-            docker run \                                                                                 
+            docker run \
               -v ${PWD}/reports:/opt/robotframework/reports:Z \
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
               -e ROBOT_OPTIONS="-v DINOSAUR:Achillobator -v NOT_DINOSAUR:kissa" \
