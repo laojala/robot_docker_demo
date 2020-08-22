@@ -2,6 +2,8 @@ name: Run Robot Framework Tests
 #Run jobs for push-events, for pull requests and scheduled:
 on:
   push:
+    branches:
+      - master
   pull_request:
   schedule:
     - cron:  '0 0 1 1 *'  #once a year in January 1st
@@ -17,6 +19,7 @@ jobs:
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
               -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator" \
               -e ROBOT_OPTIONS="--variable NOT_DINOSAUR:kissa" \
+              --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         - name: Upload reports
           uses: actions/upload-artifact@v1
