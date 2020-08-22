@@ -17,8 +17,7 @@ jobs:
             docker run \
               -v ${PWD}/reports:/opt/robotframework/reports:Z \
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
-              -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator" \
-              -e ROBOT_OPTIONS="--variable NOT_DINOSAUR:kissa" \
+              -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         - name: Upload reports
