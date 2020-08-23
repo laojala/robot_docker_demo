@@ -1,3 +1,4 @@
+# run tests manually in the Actions-tab of the project
 name: Trigger Tests Manually
 on:
   workflow_dispatch:
@@ -39,4 +40,7 @@ jobs:
           if: always()
           with:
             name: reports
-            path: ${{ github.workspace }}/reports
+            # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
+            path: |
+              ${{ github.workspace }}/reports
+              !${{ github.workspace }}/reports/log.log

@@ -1,5 +1,5 @@
-name: Run Robot Framework Tests
 # runs tests for push-events, for pull requests and using cron schedule:
+name: Run Robot Framework Tests
 on:
   push:
     # runs tests for commits pushed to master
@@ -41,13 +41,17 @@ jobs:
           if: always()
           with:
             name: reports
-            path: ${{ github.workspace }}/reports
+            # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
+            path: |
+            ${{ github.workspace }}/reports
+            !${{ github.workspace }}/reports/log.log
         # repository name is needed for posting test report in a next step
         - name: Get Repository Name
           run: |
             export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
             echo "::set-env name=REPOSITORY_NAME::$REPO"
         # when test are run for a commit, post results as a comment
+        # note: comment is not posted for tests triggered for pull requests, only for a main branch (master)
         - name: Send test report as comment to commit
           uses: joonvena/robotframework-reporter-action@v0.1
           if: ${{ github.event_name == 'push' }}
