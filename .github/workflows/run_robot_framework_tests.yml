@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '!README.md'
   pull_request:
+    paths:
+      - '!README.md'
   schedule:
     - cron:  '0 0 1 1 *'  #once a year in January 1st
 jobs:
