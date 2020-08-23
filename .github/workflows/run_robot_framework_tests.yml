@@ -26,12 +26,12 @@ jobs:
           with:
             name: reports
             path: ${{ github.workspace }}/reports
-        - name: Send report to commit
+        - name: Send test report as comment to commit
           uses: joonvena/robotframework-reporter-action@v0.1
           if: ${{ github.event_name == 'push' }}
           env:
             GH_ACCESS_TOKEN: ${{ github.TOKEN }}
             REPO_OWNER: ${{ github.REPOSITORY_OwNER }}
-            COMMIT_SHA: ${{ github.sha }}
-            REPOSITORY: ${{ github.REPOSITORY }}
+            COMMIT_SHA: ${{ github.SHA }}
+            REPOSITORY: ${{ secrets.REPO_NAME }}
             REPORT_PATH: ${{ github.workspace }}/reports
