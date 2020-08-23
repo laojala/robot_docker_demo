@@ -37,7 +37,7 @@ jobs:
           uses: joonvena/robotframework-reporter-action@v0.1
           if: ${{ github.event_name == 'push' }}
           env:
-            GH_ACCESS_TOKEN: ${{ secrets.TOKEN }}
+            GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
             REPO_OWNER: ${{ env.REPOSITORY_OWNER }}
             COMMIT_SHA: ${{ github.sha }}
             REPOSITORY: ${{ env.REPOSITORY_NAME }}
