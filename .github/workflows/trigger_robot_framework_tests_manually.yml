@@ -1,4 +1,4 @@
-name: Run Robot Framework Tests
+name: Trigger Tests Manually
 on:
   workflow_dispatch:
     # Inputs the workflow accepts.
