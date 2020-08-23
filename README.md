@@ -41,7 +41,7 @@ Next chapter describes how to modify example workflows for your project.
 ### To configure example setup to your own project:
 
 1. Modify `docker run` command according to your project:
-    * `reports` folder needs to exist in a repository. As it is not possible to add empty folder in a git, place a single file called log.log to the `/reports` folder and commit it (this is bit hacky, but I could not get ppodgorsek container's priviledges to work without this dummy file)
+    * `reports` folder needs to exist in a repository. As it is not possible to add empty folder in a git, place a file to the `/reports` folder and commit it (this is bit hacky, but I could not get ppodgorsek container's priviledges to work without this dummy file)
     * Place your tests to the `test` folder, or modify docker run command accordingly
     * Replace line `-e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \` according your project or remove it completely
 

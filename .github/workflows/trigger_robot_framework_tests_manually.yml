@@ -41,6 +41,4 @@ jobs:
           with:
             name: reports
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
-            path: |
-              ${{ github.workspace }}/reports
-              !${{ github.workspace }}/reports/log.log
+            path: ${{ github.workspace }}/reports
