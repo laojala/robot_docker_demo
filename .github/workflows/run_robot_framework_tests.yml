@@ -26,19 +26,12 @@ jobs:
           with:
             name: reports
             path: ${{ github.workspace }}/reports
-        # optional setep, also secrets can be used for OWNER AND REPO:
-        - name: Get Repository Owner & Name
-          run: |
-            export OWNER="$(echo "${{ github.repository }}" | awk -F / '{print $1}' | sed -e "s/:refs//")"
-            export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
-            echo "::set-env name=REPOSITORY_OWNER::$OWNER"
-            echo "::set-env name=REPOSITORY_NAME::$REPO"
         - name: Send report to commit
           uses: joonvena/robotframework-reporter-action@v0.1
           if: ${{ github.event_name == 'push' }}
           env:
-            GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-            REPO_OWNER: ${{ env.REPOSITORY_OWNER }}
+            GH_ACCESS_TOKEN: ${{ github.TOKEN }}
+            REPO_OWNER: ${{ github.REPOSITORY_OwNER }}
             COMMIT_SHA: ${{ github.sha }}
-            REPOSITORY: ${{ env.REPOSITORY_NAME }}
+            REPOSITORY: ${{ github.REPOSITORY }}
             REPORT_PATH: ${{ github.workspace }}/reports
