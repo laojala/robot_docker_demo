@@ -1,22 +1,34 @@
 name: Run Robot Framework Tests
-#Run jobs for push-events, for pull requests and scheduled:
+# runs tests for push-events, for pull requests and using cron schedule:
 on:
   push:
     branches:
+      # runs tests for commits pushed to master
       - master
     paths:
+      # do not run tests if file README.md changes
       - '!README.md'
   pull_request:
+    # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
     paths:
+      # do not run tests if file README.md changes
       - '!README.md'
   schedule:
-    - cron:  '0 0 1 1 *'  #once a year in January 1st
+    # run tests once a year in January 1st
+    - cron:  '0 0 1 1 *'
 jobs:
     run_tests:
         runs-on: ubuntu-latest
         steps:
+        # checkout code from a repository
         - uses: actions/checkout@v2
+        # run tests using docker
         - name: Run Robot Framework Tests
+          # container used here ppodgorsek/robot-framework:latest
+          # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
+          # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
+          # place tests in folder tests
+          # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
           run: |
             docker run \
               -v ${PWD}/reports:/opt/robotframework/reports:Z \
@@ -24,12 +36,19 @@ jobs:
               -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
+        # upload test reports as a zip file
         - name: Upload reports
           uses: actions/upload-artifact@v1
           if: always()
           with:
             name: reports
             path: ${{ github.workspace }}/reports
+        # repository name is needed for posting test report in a next step
+        - name: Get Repository Name
+          run: |
+            export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
+            echo "::set-env name=REPOSITORY_NAME::$REPO"
+        # when test are run for a commit, post results as a comment
         - name: Send test report as comment to commit
           uses: joonvena/robotframework-reporter-action@v0.1
           if: ${{ github.event_name == 'push' }}
@@ -37,5 +56,5 @@ jobs:
             GH_ACCESS_TOKEN: ${{ github.TOKEN }}
             REPO_OWNER: ${{ github.REPOSITORY_OwNER }}
             COMMIT_SHA: ${{ github.SHA }}
-            REPOSITORY: ${{ secrets.REPO_NAME }}
+            REPOSITORY: ${{ env.REPOSITORY_NAME }}
             REPORT_PATH: ${{ github.workspace }}/reports
