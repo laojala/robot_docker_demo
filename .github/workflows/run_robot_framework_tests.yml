@@ -5,14 +5,14 @@ on:
     branches:
       # runs tests for commits pushed to master
       - master
-    paths:
+    paths-ignore:
       # do not run tests if file README.md changes
-      - '!README.md'
+      - 'README.md'
   pull_request:
     # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
-    paths:
+    paths-ignore:
       # do not run tests if file README.md changes
-      - '!README.md'
+      - 'README.md'
   schedule:
     # run tests once a year in January 1st
     - cron:  '0 0 1 1 *'
