@@ -26,10 +26,7 @@ jobs:
           with:
             name: reports
             path: ${{ github.workspace }}/reports
-
-    generate_test_report_for_commits:
-        runs-on: ubuntu-latest
-          # optional setep, also secrets can be used for OWNER AND REPO
+        # optional setep, also secrets can be used for OWNER AND REPO:
         - name: Get Repository Owner & Name
           run: |
             export OWNER="$(echo "${{ github.repository }}" | awk -F / '{print $1}' | sed -e "s/:refs//")"
