@@ -15,8 +15,8 @@ on:
         default: dog
         # Input has to be provided for the workflow to run
         required: true
-      tags:
-        description: 'Tags for tests to run. Use "*" to run all'
+      tag:
+        description: 'Tag for tests to run. Use "*" to run all'
         # Default value if no value is explicitly provided
         default: dinosaur
         # Input has to be provided for the workflow to run
@@ -31,7 +31,7 @@ jobs:
             docker run \
               -v ${PWD}/reports:/opt/robotframework/reports:Z \
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
-              -e ROBOT_OPTIONS="--variable DINOSAUR:${{ github.event.inputs.DINOSAUR }} --variable NOT_DINOSAUR:${{ github.event.inputs.NOT_DINOSAUR }} --include ${{ github.event.inputs.tags }}" \
+              -e ROBOT_OPTIONS="--variable DINOSAUR:${{ github.event.inputs.DINOSAUR }} --variable NOT_DINOSAUR:${{ github.event.inputs.NOT_DINOSAUR }} --include ${{ github.event.inputs.tag }}" \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         - name: Upload reports
