@@ -2,16 +2,15 @@ name: Run Robot Framework Tests
 # runs tests for push-events, for pull requests and using cron schedule:
 on:
   push:
+    # runs tests for commits pushed to master
     branches:
-      # runs tests for commits pushed to master
       - master
+    # do not run tests if file README.md changes
     paths-ignore:
-      # do not run tests if file README.md changes
       - 'README.md'
-  pull_request:
     # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
+  pull_request:
     paths-ignore:
-      # do not run tests if file README.md changes
       - 'README.md'
   schedule:
     # run tests once a year in January 1st
@@ -22,12 +21,12 @@ jobs:
         steps:
         # checkout code from a repository
         - uses: actions/checkout@v2
-        # run tests using docker
+        # run Robot Framework tests inside Docker container
         - name: Run Robot Framework Tests
-          # container used here ppodgorsek/robot-framework:latest
+          # container used here is ppodgorsek/robot-framework:latest
           # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
           # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
-          # place tests in folder tests
+          # place tests in folder tests or change docker run command accordingly
           # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
           run: |
             docker run \
