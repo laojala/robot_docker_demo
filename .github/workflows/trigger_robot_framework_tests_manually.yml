@@ -27,10 +27,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
+        - name: Create folder for reports
+          run: mkdir reports
         - name: Run Robot Framework Tests
           run: |
             docker run \
-              -v ${PWD}:/opt/robotframework/reports:Z \
+              -v ${PWD}/reports:/opt/robotframework/reports:Z \
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
               -e ROBOT_OPTIONS="--variable DINOSAUR:${{ github.event.inputs.DINOSAUR }} --variable NOT_DINOSAUR:${{ github.event.inputs.NOT_DINOSAUR }} --include ${{ github.event.inputs.tag }}" \
               --user $(id -u):$(id -g) \

@@ -21,6 +21,9 @@ jobs:
         steps:
         # checkout code from a repository
         - uses: actions/checkout@v2
+        # create folder for test reports
+        - name: Create folder for reports
+          run: mkdir reports
         # run Robot Framework tests inside Docker container
         - name: Run Robot Framework Tests
           # container used here is ppodgorsek/robot-framework:latest
@@ -30,7 +33,7 @@ jobs:
           # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
           run: |
             docker run \
-              -v ${PWD}:/opt/robotframework/reports:Z \
+              -v ${PWD}/reports:/opt/robotframework/reports:Z \
               -v ${PWD}/tests:/opt/robotframework/tests:Z \
               -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
               --user $(id -u):$(id -g) \
