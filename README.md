@@ -1,4 +1,4 @@
-# Robot Docker Demo
+# Robot Framework CI Demo
 
 Project demonstrates how to setup Continous Integration for Robot Frameowrk tests using [GitHub Actions](https://docs.github.com/en/actions).
 
