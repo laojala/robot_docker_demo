@@ -55,10 +55,11 @@ docker run \
     ppodgorsek/robot-framework:latest
 ```
 
-2. All other configurations, such as changing cron schedule are optional. 
+2. All other configurations, such as changing the cron schedule are optional. 
 
 Things to consider:
-    * If workflow needs secrets, those can be stored in repository settings. Secret is used in the flow like this `${{ secrets.MY_SECRET_NAME }}`
+
+   * If workflow needs secrets, those can be stored in repository settings. Secret is used in the flow like this `${{ secrets.MY_SECRET_NAME }}`
 
 ## Acknowledgments
 
