@@ -19,7 +19,7 @@ In other words, separate CI server (such as Jenkins) is not needed to run Robot 
 
 ### Why use Actions for CI?
 
-Using GitHub Actions for setup CI is far  far better than sliced bread 🥯🎉 Setup is straightforward and usage is free for public repositories (see [pricing](https://github.com/pricing) for other types of repositories).
+Using GitHub Actions for setup CI is almost better than sourdough bread 🍞🎉 Setup is straightforward and usage is free for public repositories (see [pricing](https://github.com/pricing) for other types of repositories).
 
 Setup described here is very simple for demo purposes. It is possible to add more bells and whisthles if needed.
 
@@ -27,23 +27,23 @@ Setup described here is very simple for demo purposes. It is possible to add mor
 
 CI Workflows are configured in YAML files in a folder `.github/workflows`. When Job is run, it is visible in the [Actions tab](https://github.com/laojala/robot_docker_demo/actions) in the repository. 
 
-Workflow fails if Robot Framework tests fail. Robot Framewework results reports are stored in a zip file.
-
 This repository has two workflows for demo purposes:
 * [run_robot_framework_tests.yml](.github/workflows/run_robot_framework_tests.yml)
     * runs test for push events, pull requests and scheduled
+    * steps in this file are documented in detail
 * [trigger_robot_framework_tests_manually.yml](.github/workflows/trigger_robot_framework_tests_manually.yml)
     * triggers tests manually with the given parameters
 
 Docker container used in this demo is [ppodgorsek/robot-framework](https://hub.docker.com/r/ppodgorsek/robot-framework). The container has many pre-installed libraries and tools (it is even possible to run Selenium Browser tests).
 
+Workflow fails if Robot Framework tests fail. Robot Framewework results reports are stored in a zip file.
+
 The next chapter describes how to modify example workflows for your project.
 
-### To configure example setup to your own project:
+### To configure example setup to your own project
 
-1. Modify `docker run` command according to your project:
-    * `reports` folder needs to exist in a repository. As it is not possible to add an empty folder in a git, place a file to the `/reports` folder and commit it (this is bit hacky, but I could not get ppodgorsek container's privileges to work without this dummy file)
-    * Place your tests to the `test` folder, or modify run command accordingly
+1. Configure `docker run` command according to your project:
+    * Place your tests to the `test` folder
     * Modify line `-e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \` according to your project or remove it completely
 
 ```
@@ -55,7 +55,10 @@ docker run \
     ppodgorsek/robot-framework:latest
 ```
 
-2. All other modifications, such as changing cron schedule are optional. Things to consider:
+2. All other configurations, such as changing cron schedule are optional. 
+
+Things to consider:
+
     * If workflow needs secrets, those can be stored in repository settings. Secret is used in the flow like this `${{ secrets.MY_SECRET_NAME }}`
 
 ## Acknowledgments
