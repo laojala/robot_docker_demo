@@ -7,11 +7,11 @@ on:
       - master
     # do not run tests if file README.md changes
     paths-ignore:
-      - 'README.md'
+      - '**.md'
     # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
   pull_request:
     paths-ignore:
-      - 'README.md'
+      - '**.md'
   schedule:
     # run tests once a year in January 1st
     - cron:  '0 0 1 1 *'
