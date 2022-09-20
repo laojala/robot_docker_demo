@@ -7,11 +7,11 @@ on:
       - master
     # do not run tests if file README.md changes
     paths-ignore:
-      - 'README.md'
+      - '**.md'
     # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
   pull_request:
     paths-ignore:
-      - 'README.md'
+      - '**.md'
   schedule:
     # run tests once a year in January 1st
     - cron:  '0 0 1 1 *'
@@ -20,13 +20,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         # checkout code from a repository
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         # create folder for test reports
         - name: Create folder for reports
           run: mkdir reports
         # run Robot Framework tests inside Docker container
         - name: Run Robot Framework Tests
           # container used here is ppodgorsek/robot-framework:latest
+          # it is strongly recommended to use versioned image (ie. not the tag latest like here) to maintain dependencies
           # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
           # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
           # place tests in folder tests or change docker run command accordingly
@@ -40,25 +41,21 @@ jobs:
               ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
         - name: Upload reports
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v3
           if: always()
           with:
             name: reports
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
             path: ${{ github.workspace }}/reports
-        # repository name is needed for posting test report in a next step
-        - name: Get Repository Name
-          run: |
-            export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
-            echo "::set-env name=REPOSITORY_NAME::$REPO"
+        
         # when test are run for a commit, post results as a comment
         # note: comment is not posted for tests triggered for pull requests, only for a main branch (master)
         - name: Send test report as comment to commit
-          uses: joonvena/robotframework-reporter-action@v0.1
+          uses: joonvena/robotframework-reporter-action@v2
           if: ${{ github.event_name == 'push' }}
           env:
             GH_ACCESS_TOKEN: ${{ github.TOKEN }}
             REPO_OWNER: ${{ github.REPOSITORY_OwNER }}
             COMMIT_SHA: ${{ github.SHA }}
-            REPOSITORY: ${{ env.REPOSITORY_NAME }}
+            REPOSITORY: ${{ env.GITHUB_ACTION_REPOSITORY }}
             REPORT_PATH: ${{ github.workspace }}/reports

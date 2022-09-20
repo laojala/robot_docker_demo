@@ -1,6 +1,6 @@
 # Robot Framework CI Demo
 
-Project demonstrates how to setup Continous Integration for Robot Frameowrk tests using [GitHub Actions](https://docs.github.com/en/actions).
+This project demonstrates how to setup Continous Integration for Robot Framework tests using [GitHub Actions](https://docs.github.com/en/actions).
 
 ## Use Cases
 
@@ -13,9 +13,9 @@ Demo covers these use cases:
     * Trigger tests manually. Input variables for a test run.
 * Reporting:
     * Store Robot Framework reports from test runs
-    * Post summary of results as comment to a commit. Comment is posted only to the main (master) branch.
+    * Post summary of results as a comment to a commit. The comment is posted only to the main (master) branch.
 
-In other words, separate CI server (such as Jenkins) is not needed to run Robot Framework tests. 
+In other words, a separate CI server (such as Jenkins) is not needed to run Robot Framework tests. 
 
 ### Why use Actions for CI?
 
@@ -60,6 +60,7 @@ docker run \
 Things to consider:
 
    * If workflow needs secrets, those can be stored in repository settings. Secret is used in the flow like this `${{ secrets.MY_SECRET_NAME }}`
+   * Docker image `ppodgorsek/robot-framework:latest` is not versioned. `latest` tag can contain any version of the Robot Framework and other libraries. *It is strongly advised to use some other version controlled image for running tests.*
 
 ## Acknowledgments
 
