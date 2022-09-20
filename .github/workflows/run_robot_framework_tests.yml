@@ -40,7 +40,7 @@ jobs:
               ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
         - name: Upload reports
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v3
           if: always()
           with:
             name: reports
