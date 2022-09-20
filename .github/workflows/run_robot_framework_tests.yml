@@ -46,19 +46,15 @@ jobs:
             name: reports
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
             path: ${{ github.workspace }}/reports
-        # repository name is needed for posting test report in a next step
-        - name: Get Repository Name
-          run: |
-            export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
-            echo "::set-env name=REPOSITORY_NAME::$REPO"
+        
         # when test are run for a commit, post results as a comment
         # note: comment is not posted for tests triggered for pull requests, only for a main branch (master)
         - name: Send test report as comment to commit
-          uses: joonvena/robotframework-reporter-action@v0.1
+          uses: joonvena/robotframework-reporter-action@v2
           if: ${{ github.event_name == 'push' }}
           env:
             GH_ACCESS_TOKEN: ${{ github.TOKEN }}
             REPO_OWNER: ${{ github.REPOSITORY_OwNER }}
             COMMIT_SHA: ${{ github.SHA }}
-            REPOSITORY: ${{ env.REPOSITORY_NAME }}
+            REPOSITORY: ${{ env.GITHUB_ACTION_REPOSITORY }}
             REPORT_PATH: ${{ github.workspace }}/reports
