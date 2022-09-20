@@ -64,7 +64,5 @@ Things to consider:
 
 ## Acknowledgments
 
-* GitHub Action that posts summary of test result as a comment for commit messages: [https://github.com/joonvena/robotframework-reporter-action](https://github.com/joonvena/robotframework-reporter-action)
-    * [Blog post of the usage](https://medium.com/faun/robot-framework-testing-using-github-actions-e0aa8df16fd8)
 * List of dinosaur names used in tests (it would be actually possible to configure updating list of dinosaur names using Actions 🦕🦖): [https://www.npmjs.com/package/dinosaurs](https://www.npmjs.com/package/dinosaurs)
 * Docker container used to run Robot Framework tests: [ppodgorsek/robot-framework Docker container](https://hub.docker.com/r/ppodgorsek/robot-framework)
