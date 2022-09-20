@@ -27,6 +27,7 @@ jobs:
         # run Robot Framework tests inside Docker container
         - name: Run Robot Framework Tests
           # container used here is ppodgorsek/robot-framework:latest
+          # it is strongly recommended to use versioned image (ie. not the tag latest like here) to maintain dependencies
           # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
           # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
           # place tests in folder tests or change docker run command accordingly
